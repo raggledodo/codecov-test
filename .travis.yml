@@ -1,0 +1,34 @@
+sudo: required
+
+services:
+  - docker
+
+jobs:
+  include:
+    - stage: build docker image
+      script:
+        - git checkout ${TRAVIS_BRANCH}
+        - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+        - docker build -t $DOCKER_USERNAME/travis-test:${TRAVIS_COMMIT} .
+        - docker images
+        - docker push $DOCKER_USERNAME/travis-test:${TRAVIS_COMMIT}
+    - stage: atest
+      script:
+        - docker run -e CODECOV_TOKEN=${CODECOV_TOKEN} --rm $DOCKER_USERNAME/travis-test:${TRAVIS_COMMIT} testa.sh
+    - stage: btest
+      script:
+        - docker run -e CODECOV_TOKEN=${CODECOV_TOKEN} --rm $DOCKER_USERNAME/travis-test:${TRAVIS_COMMIT} testb.sh
+
+notifications:
+  email: false
+
+branches:
+  except:
+  - legacy
+
+# safelist
+branches:
+  only:
+  - master
+  - /experimental(-.*)?/
+  - stable

@@ -1,0 +1,23 @@
+licenses(["notice"])
+
+package(
+    default_visibility = ["//visibility:public"],
+)
+
+cc_library(
+    name = "lib",
+    hdrs = ["lib.hpp"]
+    srcs = ["lib.cpp"]
+)
+
+cc_binary(
+    name = "a",
+    srcs = ["maina.cpp"],
+    deps = ["//:lib"]
+)
+
+cc_binary(
+    name = "b",
+    srcs = ["mainb.cpp"],
+    deps = ["//:lib"]
+)
