@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if $1 == "a"; then
+if [ $1 == "a" ]; then
     bazel coverage \
     --action_env="ASAN_OPTIONS=detect_leaks=0" \
     --config asan \

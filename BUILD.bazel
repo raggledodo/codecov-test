@@ -6,18 +6,18 @@ package(
 
 cc_library(
     name = "lib",
-    hdrs = ["lib.hpp"]
-    srcs = ["lib.cpp"]
+    hdrs = ["lib.hpp"],
+    srcs = ["lib.cpp"],
 )
 
-cc_binary(
+cc_test(
     name = "a",
     srcs = ["maina.cpp"],
-    deps = ["//:lib"]
+    deps = ["//:lib"],
 )
 
-cc_binary(
+cc_test(
     name = "b",
     srcs = ["mainb.cpp"],
-    deps = ["//:lib"]
+    deps = ["//:lib"],
 )
