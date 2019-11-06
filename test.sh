@@ -6,6 +6,7 @@ if [ $1 == "a" ]; then
     --config asan \
     --config cc_coverage //:a | grep -v '+' | grep -v 'Processing';
 else
+    bazel coverage \
     --action_env="ASAN_OPTIONS=detect_leaks=0" \
     --config asan \
     --config cc_coverage //:b | grep -v '+' | grep -v 'Processing';
